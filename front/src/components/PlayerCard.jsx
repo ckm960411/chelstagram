@@ -1,7 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { FavoriteBorder as LikeIcon, Favorite as LikedIcon } from "@mui/icons-material";
 import { useCallback, useState } from "react";
-import playerImg from 'imgs/Kepa-Arrizabalaga.png'
 import { useNavigate } from "react-router-dom";
 
 export default function PlayerCard({ player }) {

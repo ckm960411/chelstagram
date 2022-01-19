@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import AppLayout from "components/AppLayout";
 import PlayerCard from "components/PlayerCard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadPlayersList } from "store/playersSlice";
 
