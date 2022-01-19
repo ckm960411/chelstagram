@@ -5,6 +5,20 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import styled from "styled-components";
+
+const StatBar = styled.div`
+  width: 100%;
+  height: 10px;
+  background: #e0e0e0;
+  position: relative;
+  top: 4px;
+`
+const PercentageBar = styled.div`
+  width: ${props => props.percentage || '100%'};
+  height: 100%;
+  background: #001487;
+`
 
 const StatNumber = (matches, position, stats, a, b, c, d) => (
   <Typography 
@@ -55,6 +69,14 @@ const StatisticsCard = ({ player }) => {
       >
         {StatNumber(matches, position, stats, `${stats.shotsSaved}%`, `${stats.tackleSuccess}%`, `${stats.conversionRate}%`, `${stats.passAccuracy}%`)}
         {StatCard(position, stats, "Shots Saved", "Tackle Success", "Conversion Rate", "Pass Accuracy")}
+        <StatBar>
+          <PercentageBar percentage={
+            position === "GoalKeeper" ? `${stats.shotsSaved}%`
+            : position === "Defender" ?  `${stats.tackleSuccess}%`
+            : position === "Forward" && stats.totalShots >= 1 ? `${stats.conversionRate}%`
+            : `${stats.passAccuracy}%`
+          } />
+        </StatBar>
       </CardContent>
       <CardContent sx={{ textAlign: "center", display: "flex" }}>
         <div style={{ flex: 1, borderRight: "1px solid #DBDEEF" }}>
