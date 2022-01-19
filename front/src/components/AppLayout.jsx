@@ -26,8 +26,6 @@ import {
   Bookmark as BookmarkIcon,
   MarkChatUnread as MarkChatUnreadIcon,
   Search as SearchIcon,
-  MoveToInbox as InboxIcon,
-  Mail as MailIcon
 } from '@mui/icons-material';
 
 const drawerWidth = 240;

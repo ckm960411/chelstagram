@@ -1,45 +1,44 @@
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import AppLayout from 'components/AppLayout'
-import PlayerCard from 'components/PlayerCard'
+import Grid from "@mui/material/Grid";
+import AppLayout from "components/AppLayout";
+import PlayerCard from "components/PlayerCard";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { loadPlayersList } from "store/playersSlice";
 
-const Item = styled(PlayerCard)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+const Players = () => {
+  const dispatch = useDispatch()
+  const playersInfo = useSelector(state => state.players.value)
+  const error = useSelector(state => state.players.error)
 
+  useEffect(() => {
+    dispatch(loadPlayersList())
+      .then(res => console.log('success'))
+      .catch(error => console.log(error))
+  }, [])
 
-const players = () => {
+  console.log(error)
+  if (error) {
+    return (
+      <AppLayout>
+        <div>Something wrong: {error}</div>
+        <div>Please retry again.</div>
+      </AppLayout>
+    )
+  }
+
   return (
     <>
       <AppLayout>
-        <div>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={4} xl={3} sx={{ textAlign: 'center' }}>
-              <PlayerCard />
+        <Grid container spacing={2}>
+          {playersInfo.map(player => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={`${player.name}-${player.backNumber}`}>
+              <PlayerCard player={player} />
             </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <PlayerCard />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <PlayerCard />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <PlayerCard />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <PlayerCard />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <PlayerCard />
-            </Grid>
-          </Grid>
-        </div>
+          ))}
+        </Grid>
       </AppLayout>
     </>
-  )
-}
+  );
+};
 
-export default players
+export default Players;
