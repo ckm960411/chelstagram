@@ -1,4 +1,4 @@
-import { Button, Checkbox, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Grid, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import AppLayout from "components/AppLayout";
 import Stats from "components/Stats";
@@ -50,7 +50,7 @@ const PlayerDetail = () => {
     dispatch(loadPlayerInfo(playerId))
       .then((res) => console.log("success"))
       .catch((error) => console.log(error));
-  }, [playerId]);
+  }, [playerId, dispatch]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -12,18 +12,24 @@ export const loadPlayersList = createAsyncThunk(
 export const playersSlice = createSlice({
   name: 'players',
   initialState: {
+    loading: false,
     value: [],
-    error: ''
+    error: null,
   },
   reducers: {
     
   },
   extraReducers: {
+    [loadPlayersList.pending]: (state, action) => {
+      state.loading = true
+    },
     [loadPlayersList.fulfilled]: (state, action) => {
       state.value = action.payload.players
+      state.loading = false
     },
     [loadPlayersList.rejected]: (state, action) => {
       state.error = action.error.message
+      state.loading = false
     }
   },
 })

@@ -1,7 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addPlayerComment } from "store/playerSlice";
 
 const CommentForm = () => {
+  const dispatch = useDispatch()
+  const player = useSelector(state => state.player.value)[0]
+  const { backNumber } = player
   const [comment, setComment] = useState('')
 
   const onChangeComment = useCallback((e) => {
@@ -9,14 +15,17 @@ const CommentForm = () => {
   }, [])
   const onSubmitComment = useCallback(() => {
     if (comment === '') return
-    console.log(comment.trim())
+    const data = { playerId: backNumber, userId: 'KMin', text: comment}
+    dispatch(addPlayerComment(data))
+      .then(res => console.log(res))
+      .catch(error => console.error(error))
     setComment('')
-  }, [comment])
+  }, [comment, dispatch, backNumber])
 
   return (
     <Box>
       <TextField
-        label="comment"
+        label="Add your comment!"
         multiline
         rows={2}
         fullWidth

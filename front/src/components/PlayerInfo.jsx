@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
+import { Card, CardContent, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
 import { GlobalStyles } from "@mui/styled-engine"
 import { useSelector } from "react-redux"
 import styled from "styled-components"

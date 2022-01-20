@@ -19,6 +19,7 @@ export const players = [
       saves:  8,
       savesPerGame: 2.67,
     },
+    comments: [],
   },
   {
     backNumber: 2,
@@ -40,6 +41,7 @@ export const players = [
       totalTackles: 27,
       tacklesWon: 18,
     },
+    comments: [],
   },
   {
     backNumber: 3,
@@ -61,6 +63,7 @@ export const players = [
       totalTackles: 32,
       tacklesWon: 23,
     },
+    comments: [],
   },
   {
     backNumber: 4,
@@ -82,6 +85,7 @@ export const players = [
       totalTackles: 6,
       tacklesWon: 4,
     },
+    comments: [],
   },
   {
     backNumber: 5,
@@ -103,6 +107,7 @@ export const players = [
       totalPasses: 1146,
       passesCompleted: 1018,
     },
+    comments: [],
   },
   {
     backNumber: 6,
@@ -124,6 +129,7 @@ export const players = [
       totalTackles: 19,
       tacklesWon: 14,
     },
+    comments: [],
   },
   {
     backNumber: 7,
@@ -145,6 +151,7 @@ export const players = [
       totalPasses: 639,
       passesCompleted: 548,
     },
+    comments: [],
   },
   {
     backNumber: 8,
@@ -166,6 +173,7 @@ export const players = [
       totalPasses: 774,
       passesCompleted: 680,
     },
+    comments: [],
   },
   {
     backNumber: 9,
@@ -189,6 +197,7 @@ export const players = [
       shotsOnTarget: 10,
       shootingAcuuracy: 59,
     },
+    comments: [],
   },
   {
     backNumber: 10,
@@ -210,6 +219,7 @@ export const players = [
       totalPasses: 231,
       passesCompleted: 185,
     },
+    comments: [],
   },
   {
     backNumber: 11,
@@ -233,6 +243,7 @@ export const players = [
       shotsOnTarget: 6,
       shootingAcuuracy: 60,
     },
+    comments: [],
   },
   {
     backNumber: 12,
@@ -254,6 +265,7 @@ export const players = [
       totalPasses: 440,
       passesCompleted: 386,
     },
+    comments: [],
   },
   {
     backNumber: 13,
@@ -275,6 +287,7 @@ export const players = [
       saves: 2,
       savesPerGame: 2,
     },
+    comments: [],
   },
   {
     backNumber: 14,
@@ -296,6 +309,7 @@ export const players = [
       totalTackles: 22,
       tacklesWon: 12,
     },
+    comments: [],
   },
   {
     backNumber: 16,
@@ -317,6 +331,7 @@ export const players = [
       saves:  55,
       savesPerGame: 2.75,
     },
+    comments: [],
   },
   {
     backNumber: 17,
@@ -338,6 +353,7 @@ export const players = [
       totalPasses: 121,
       passesCompleted: 104,
     },
+    comments: [],
   },
   {
     backNumber: 18,
@@ -359,6 +375,7 @@ export const players = [
       totalPasses: 104,
       passesCompleted: 88,
     },
+    comments: [],
   },
   {
     backNumber: 19,
@@ -380,6 +397,7 @@ export const players = [
       totalPasses: 573,
       passesCompleted: 482,
     },
+    comments: [],
   },
   {
     backNumber: 20,
@@ -403,6 +421,7 @@ export const players = [
       shotsOnTarget: 7,
       shootingAcuuracy: 64,
     },
+    comments: [],
   },
   {
     backNumber: 21,
@@ -424,6 +443,7 @@ export const players = [
       totalTackles: 8,
       tacklesWon: 3,
     },
+    comments: [],
   },
   {
     backNumber: 22,
@@ -445,6 +465,7 @@ export const players = [
       totalPasses: 295,
       passesCompleted: 233,
     },
+    comments: [],
   },
   {
     backNumber: 24,
@@ -466,6 +487,7 @@ export const players = [
       totalTackles: 19,
       tacklesWon: 16,
     },
+    comments: [],
   },
   {
     backNumber: 28,
@@ -487,6 +509,7 @@ export const players = [
       totalTackles: 38,
       tacklesWon: 20,
     },
+    comments: [],
   },
   {
     backNumber: 29,
@@ -508,6 +531,7 @@ export const players = [
       totalPasses: 319,
       passesCompleted: 264,
     },
+    comments: [],
   },
   {
     backNumber: 31,
@@ -529,5 +553,6 @@ export const players = [
       totalTackles: 6,
       tacklesWon: 5,
     },
+    comments: [],
   },
 ]

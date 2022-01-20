@@ -1,18 +1,18 @@
 import { Avatar, Divider, Grid, IconButton, Typography } from "@mui/material"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+  const { userId, text, profileImg } = comment
+
   return (
     <>
       <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
-          <Avatar sx={{ background: '#001487' }}>K</Avatar>
+          <Avatar sx={{ background: '#001487' }}>{userId[0]}</Avatar>
         </Grid>
         <Grid item justifyContent="left" xs zeroMinWidth>
-          <h4 style={{ margin: '10px 0' }}>hello</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ea cuadfadsm aperiam odit dicta! Officia perferendis cumque incidunt earum laudantium, repudiandae commodi, quisquam, ea vero illo sunt ut alias facere!
-          </p>
+          <h4 style={{ margin: '10px 0' }}>{userId}</h4>
+          <p>{text}</p>
           <Typography variant="button">2 hours ago</Typography>
         </Grid>
         <Grid item>

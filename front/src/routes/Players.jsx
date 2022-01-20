@@ -14,9 +14,8 @@ const Players = () => {
     dispatch(loadPlayersList())
       .then(res => console.log('success'))
       .catch(error => console.log(error))
-  }, [])
+  }, [dispatch])
 
-  console.log(error)
   if (error) {
     return (
       <AppLayout>

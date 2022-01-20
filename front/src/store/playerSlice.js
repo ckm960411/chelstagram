@@ -9,6 +9,14 @@ export const loadPlayerInfo = createAsyncThunk(
   } 
 )
 
+export const addPlayerComment = createAsyncThunk(
+  "player/addPlayerComment",
+  async ( data ) => {
+    const response = await axios.post(`/players/${data.playerId}/comment`, { ...data })
+    return response.data
+  } 
+)
+
 export const playerSlice = createSlice({
   name: 'player',
   initialState: {
@@ -17,18 +25,29 @@ export const playerSlice = createSlice({
     error: null
   },
   reducers: {
-    
+  
   },
   extraReducers: {
     [loadPlayerInfo.pending]: (state, action) => {
       state.loading = true
-      state.value = {}
+      state.value = []
     },
     [loadPlayerInfo.fulfilled]: (state, action) => {
       state.value = action.payload.player
       state.loading = false
     },
     [loadPlayerInfo.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    },
+    [addPlayerComment.pending]: (state, action) => {
+      state.loading = true
+    },
+    [addPlayerComment.fulfilled]: (state, action) => {
+      state.value[0].comments.unshift(action.payload)
+      state.loading = false
+    },
+    [addPlayerComment.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },
