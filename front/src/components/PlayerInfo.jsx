@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
+import { GlobalStyles } from "@mui/styled-engine"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 
@@ -27,15 +28,24 @@ const PlayerInfo = () => {
   const player = useSelector(state => state.player.value)[0]
   const { name, position, birthDate, birthPlace, backNumber, stats } = player
 
-  console.log(downSm)
-
   return (
     <>
-      <Card sx={downLg ? { boxShadow: 'none' } : { border: '2px solid #001487' }}>
-        <CardHeader 
+      <Card sx={{ boxShadow: 'none' }}>
+        <GlobalStyles styles={{
+          '.css-fae2zt-MuiCardContent-root:last-child': {
+            paddingBottom: 0
+          }
+        }}
+        />
+        <CardContent sx={{ padding: '0 16px 12px' }}>
+          <Typography sx={{ color: '#001487', fontSize: '24px', fontWeight: 600 }}>{name}</Typography>
+        </CardContent>
+      </Card>
+      <Card sx={downLg ? { boxShadow: 'none' } : { border: '2px solid #001487', marginTop: '12px' }}>
+        {/* <CardHeader 
           title={name}
           sx={{ color: '#001487' }}
-        />
+        /> */}
         <CardContent sx={downSm && { display: 'none' }}>
           <Grid container spacing={1} sx={{ textAlign: 'center' }}>
             <Grid item xs={3} sm={3}>
@@ -70,7 +80,7 @@ const PlayerInfo = () => {
                 {
                   position === 'GoalKeeper' ? stats.shotsSaved :
                   position === 'Defender' ? stats.tackleSuccess :
-                  position === 'Forward' && stats.totalShots >= 1 ? stats.shootingAcuuracy
+                  position === 'Forward' && stats.totalShots !== undefined ? stats.shootingAcuuracy
                   : stats.passAccuracy
                 }%
               </StyledTypo>
@@ -78,7 +88,7 @@ const PlayerInfo = () => {
                 {
                   position === 'GoalKeeper' ? 'Shots Saved' :
                   position === 'Defender' ? 'Tackles Success' :
-                  position === 'Forward' && stats.totalShots >= 1 ? 'Shooting Accuracy'
+                  position === 'Forward' && stats.totalShots !== undefined ? 'Shooting Accuracy'
                   : 'Pass Accuracy'
                 }
               </StyledTypo>

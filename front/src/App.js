@@ -1,5 +1,5 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AppRouter from "./Router";
+import AppRouter from "Router";
 
 const themeOptions = createTheme({
   palette: {

@@ -17,7 +17,7 @@ const StatNumber = (matches, position, stats, a, b, c) => (
   >
     {
       position === "GoalKeeper" ? a
-      : position === "Forward" && stats.totalShots >= 1 ? b
+      : position === "Forward" && stats.totalShots !== undefined ? b
       : c
     }
   </Typography>
@@ -26,7 +26,7 @@ const StatLabel = (position, stats, a, b, c) => (
   <Typography component="span">
     {
       position === "GoalKeeper" ? a
-      : position === "Forward" && stats.totalShots >= 1 ? b
+      : position === "Forward" && stats.totalShots !== undefined ? b
       : c
     }
   </Typography>
@@ -47,7 +47,7 @@ const DetailStatCard = ({ player }) => {
       <CardHeader
         subheader={
           position === "GoalKeeper" ? "Clean Sheet Statistics"
-          : position === "Forward" && stats.totalShots >= 1 ? "Goal Statistics"
+          : position === "Forward" && stats.totalShots !== undefined ? "Goal Statistics"
           : "Assistance Statistics"
         }
       />

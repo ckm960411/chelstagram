@@ -29,14 +29,14 @@ const stats = [
 const Stats = ({ player }) => {
   return (
     <>
-      <Grid container spacing={2} sx={{ margin: '0 auto', justifyContent: 'space-between' }}>
+      <Grid container spacing={2}>
         {stats.map(stat => (
           <Grid item xs={12} sm={6} md={3}>
             <StatCard name={stat.name} img={stat.img} stats={player.stats} />
           </Grid>
         ))}
       </Grid>
-      <Grid container spacing={2} sx={{ marginLeft: 0 }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6}>
           <DetailStatCard player={player} />
         </Grid>

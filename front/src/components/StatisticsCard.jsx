@@ -36,7 +36,7 @@ const StatNumber = (matches, position, stats, a, b, c, d) => (
     {
       position === "GoalKeeper" ? a
       : position === "Defender" ?  b
-      : position === "Forward" && stats.totalShots >= 1 ? c
+      : position === "Forward" && stats.totalShots !== undefined ? c
       : d
     }
   </Typography>
@@ -46,7 +46,7 @@ const StatCard = (position, stats, a, b, c, d) => (
     {
       position === "GoalKeeper" ? a
       : position === "Defender" ?  b
-      : position === "Forward" && stats.totalShots >= 1 ? c
+      : position === "Forward" && stats.totalShots !== undefined ? c
       : d
     }
   </Typography>
@@ -62,7 +62,7 @@ const StatisticsCard = ({ player }) => {
         subheader={
           position === "GoalKeeper" ? "Save Statistics"
           : position === "Defender" ?  "Tackle Statistics"
-          : position === "Forward" && stats.totalShots >= 1 ? "Shooting Statistics"
+          : position === "Forward" && stats.totalShots !== undefined ? "Shooting Statistics"
           : "Distribution Statistics"
         }
       />
@@ -79,7 +79,7 @@ const StatisticsCard = ({ player }) => {
           <PercentageBar percentage={
             position === "GoalKeeper" ? `${stats.shotsSaved}%`
             : position === "Defender" ?  `${stats.tackleSuccess}%`
-            : position === "Forward" && stats.totalShots >= 1 ? `${stats.conversionRate}%`
+            : position === "Forward" && stats.totalShots !== undefined ? `${stats.conversionRate}%`
             : `${stats.passAccuracy}%`
           } />
         </StatBar>

@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { loadPlayerInfo } from "store/playerSlice";
 import GlobalStyles from '@mui/material/GlobalStyles';
 import PlayerInfo from "components/PlayerInfo";
+import Comments from "components/Comments";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -74,7 +75,7 @@ const PlayerDetail = () => {
     <AppLayout>
       <GlobalStyles styles={{
         '.css-19kzrtu': {
-          padding: '0 !important', paddingRight: '40px !important'
+          padding: '10px 0 !important'
         }
       }} />
       <Grid container spacing={2}>
@@ -97,7 +98,7 @@ const PlayerDetail = () => {
             <Stats player={playerInfo} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Item Two
+            <Comments />
           </TabPanel>
           <TabPanel value={value} index={2}>
             Item Three
