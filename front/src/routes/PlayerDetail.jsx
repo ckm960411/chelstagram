@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { loadPlayerInfo } from "store/playerSlice";
 import GlobalStyles from '@mui/material/GlobalStyles';
+import PlayerInfo from "components/PlayerInfo";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -103,7 +104,7 @@ const PlayerDetail = () => {
           </TabPanel>
         </Grid>
         <Grid item xs={12} md={12} lg={4} order={{ xs: 2, md: 2, lg: 3 }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, sunt.
+          <PlayerInfo />
         </Grid>
       </Grid>
     </AppLayout>

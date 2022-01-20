@@ -32,7 +32,7 @@ export default function PlayerCard({ player }) {
         <Typography variant="body2" color="text.secondary">
           {backNumber}, {position}
           <br />
-          {birthDate}, {birthPlace}
+          {birthDate} | {birthPlace}
         </Typography>
       </CardContent>
       <CardActions>

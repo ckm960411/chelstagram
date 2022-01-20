@@ -19,6 +19,12 @@ const PercentageBar = styled.div`
   height: 100%;
   background: #001487;
 `
+const StyledTypo = styled.div`
+  flex: 1;
+  border-right: ${props => props.borderRight === true ? '1px solid #d8deef' : null};
+  height: 100px;
+  padding: 16px 6px 0;
+`
 
 const StatNumber = (matches, position, stats, a, b, c, d) => (
   <Typography 
@@ -36,7 +42,7 @@ const StatNumber = (matches, position, stats, a, b, c, d) => (
   </Typography>
 )
 const StatCard = (position, stats, a, b, c, d) => (
-  <Typography component="span">
+  <Typography component="div">
     {
       position === "GoalKeeper" ? a
       : position === "Defender" ?  b
@@ -79,14 +85,14 @@ const StatisticsCard = ({ player }) => {
         </StatBar>
       </CardContent>
       <CardContent sx={{ textAlign: "center", display: "flex" }}>
-        <div style={{ flex: 1, borderRight: "1px solid #DBDEEF" }}>
+        <StyledTypo borderRight>
           {StatNumber(matches, position, stats, stats.saves, stats.totalTackles, stats.totalShots, stats.totalPasses)}
           {StatCard(position, stats, "Saves", "Total Tackles", "Total Shots", "Total Passes")}
-        </div>
-        <div style={{ flex: 1 }}>
+        </StyledTypo>
+        <StyledTypo>
           {StatNumber(matches, position, stats, stats.savesPerGame, stats.tacklesWon, stats.shotsOnTarget, stats.passesCompleted)}
           {StatCard(position, stats, "Saves Per Game", "Tackles Won", "Shots On Target", "Passes Completed")}
-        </div>
+        </StyledTypo>
       </CardContent>
     </Card>
   );
