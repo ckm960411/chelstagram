@@ -26,7 +26,7 @@ export default function PlayerCard({ player }) {
         sx={{ padding: '4px' }}
       />
       <CardContent>
-        <Typography gutterBottm variant="h6" component="div" sx={{ color: '#001487' }}>
+        <Typography variant="h6" component="div" sx={{ color: '#001487' }}>
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">

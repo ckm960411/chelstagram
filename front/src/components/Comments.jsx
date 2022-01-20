@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import Comment from "./Comment";
-import CommentForm from "./CommentForm";
+import Comment from "components/Comment";
+import CommentForm from "components/CommentForm";
 
 const Comments = () => {
   const player = useSelector(state => state.player.value)[0]

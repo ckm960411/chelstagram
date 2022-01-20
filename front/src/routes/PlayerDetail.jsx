@@ -23,7 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={'div'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -46,10 +46,7 @@ const PlayerDetail = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    console.log("useEffect");
     dispatch(loadPlayerInfo(playerId))
-      .then((res) => console.log("success"))
-      .catch((error) => console.log(error));
   }, [playerId, dispatch]);
 
   const handleChange = (event, newValue) => {

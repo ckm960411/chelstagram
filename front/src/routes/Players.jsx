@@ -12,9 +12,7 @@ const Players = () => {
 
   useEffect(() => {
     dispatch(loadPlayersList())
-      .then(res => console.log('success'))
-      .catch(error => console.log(error))
-  }, [dispatch])
+  }, [])
 
   if (error) {
     return (

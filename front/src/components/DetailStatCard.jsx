@@ -1,5 +1,6 @@
 import {
   Card,
+  CardActionArea,
   CardContent,
   CardHeader,
   Typography,
@@ -10,9 +11,8 @@ import styled from "styled-components";
 
 const StatNumber = (matches, position, stats, a, b, c) => (
   <Typography 
-    gutterBottom
     variant={matches ? "h4" : "h5"}
-    component="div"
+    // component="div"
     sx={{ marginBottom: 0 }}
   >
     {
@@ -44,37 +44,39 @@ const DetailStatCard = ({ player }) => {
 
   return (
     <Card sx={{ borderBottom: "3px solid #001487" }}>
-      <CardHeader
-        subheader={
-          position === "GoalKeeper" ? "Clean Sheet Statistics"
-          : position === "Forward" && stats.totalShots !== undefined ? "Goal Statistics"
-          : "Assistance Statistics"
-        }
-      />
-      <CardContent
-        sx={{
-          textAlign: "center",
-          height: "120px",
-          paddingTop: "30px",
-          backgroundImage: `url(${goalpostImg})`,
-          backgroundPosition: "center center",
-          backgroundSize: "200px 80px",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        {StatNumber(matches, position, stats, stats.goalsConceded, stats.goalsFromInsideBox, stats.assists)}
-        {StatLabel(position, stats, "Goals Conceded", "Goals From Inside Box", "Assists")}
-      </CardContent>
-      <CardContent sx={{ textAlign: "center", display: "flex" }}>
-        <StyledTypo borderRight>
-          {StatNumber(matches, position, stats, stats.cleanSheets, stats.goalsFromOutsideBox, stats.crosses)}
-          {StatLabel(position, stats, "Clean Sheets", "Goals From Outside Box", "Crosses")}
-        </StyledTypo>
-        <StyledTypo>
-          {StatNumber(matches, position, stats, stats.minsPerGoalConceded, stats.goalsFormSetPieces, stats.chancesCreated)}
-          {StatLabel(position, stats, "Mins Per Goal Conceded", "Goals From Set Pieces", "Chances Created")}
-        </StyledTypo>
-      </CardContent>
+      <CardActionArea>
+        <CardHeader
+          subheader={
+            position === "GoalKeeper" ? "Clean Sheet Statistics"
+            : position === "Forward" && stats.totalShots !== undefined ? "Goal Statistics"
+            : "Assistance Statistics"
+          }
+        />
+        <CardContent
+          sx={{
+            textAlign: "center",
+            height: "120px",
+            paddingTop: "30px",
+            backgroundImage: `url(${goalpostImg})`,
+            backgroundPosition: "center center",
+            backgroundSize: "200px 80px",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          {StatNumber(matches, position, stats, stats.goalsConceded, stats.goalsFromInsideBox, stats.assists)}
+          {StatLabel(position, stats, "Goals Conceded", "Goals From Inside Box", "Assists")}
+        </CardContent>
+        <CardContent sx={{ textAlign: "center", display: "flex" }}>
+          <StyledTypo borderRight>
+            {StatNumber(matches, position, stats, stats.cleanSheets, stats.goalsFromOutsideBox, stats.crosses)}
+            {StatLabel(position, stats, "Clean Sheets", "Goals From Outside Box", "Crosses")}
+          </StyledTypo>
+          <StyledTypo>
+            {StatNumber(matches, position, stats, stats.minsPerGoalConceded, stats.goalsFormSetPieces, stats.chancesCreated)}
+            {StatLabel(position, stats, "Mins Per Goal Conceded", "Goals From Set Pieces", "Chances Created")}
+          </StyledTypo>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

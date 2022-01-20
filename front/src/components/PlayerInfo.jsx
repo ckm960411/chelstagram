@@ -10,7 +10,7 @@ const StatBox = styled.div`
 `
 const StyledTypo = styled(Typography)`
   color: #001487;
-  font-size: ${props => props.large === true ? '28px' : '12px'};
+  font-size: ${props => props.large === 1 ? '28px' : '12px'};
 `
 const InfoBox = ({ title, desc }) => (
   <>
@@ -33,7 +33,7 @@ const PlayerInfo = () => {
       <Card sx={{ boxShadow: 'none' }}>
         <GlobalStyles styles={{
           '.css-fae2zt-MuiCardContent-root:last-child': {
-            paddingBottom: 0
+            paddingBottom: '0px !important'
           }
         }}
         />
@@ -41,22 +41,22 @@ const PlayerInfo = () => {
           <Typography sx={{ color: '#001487', fontSize: '24px', fontWeight: 600 }}>{name}</Typography>
         </CardContent>
       </Card>
-      <Card sx={downLg ? { boxShadow: 'none' } : { border: '2px solid #001487', marginTop: '12px' }}>
-        {/* <CardHeader 
-          title={name}
-          sx={{ color: '#001487' }}
-        /> */}
-        <CardContent sx={downSm && { display: 'none' }}>
+      <Card sx={
+        downSm ? { display: 'none' } : 
+        downLg ? { boxShadow: 'none' } : 
+        { border: '2px solid #001487', marginTop: '12px' }
+      }>
+        <CardContent>
           <Grid container spacing={1} sx={{ textAlign: 'center' }}>
             <Grid item xs={3} sm={3}>
               <StatBox>
-                <StyledTypo large>{stats.appearances}</StyledTypo>
+                <StyledTypo large={1}>{stats.appearances}</StyledTypo>
                 <StyledTypo>Appearances</StyledTypo>
               </StatBox>
             </Grid >
             <Grid item xs={3} sm={3}> 
             <StatBox>
-              <StyledTypo large>
+              <StyledTypo large={1}>
                 {position === 'GoalKeeper' ? stats.cleanSheets : stats.goals}
               </StyledTypo>
               <StyledTypo>
@@ -66,7 +66,7 @@ const PlayerInfo = () => {
             </Grid>
             <Grid item xs={3} sm={3}>
             <StatBox>
-              <StyledTypo large>
+              <StyledTypo large={1}>
                 {position === 'GoalKeeper' ? stats.saves : stats.assists}
               </StyledTypo>
               <StyledTypo>
@@ -76,7 +76,7 @@ const PlayerInfo = () => {
             </Grid>
             <Grid item xs={3} sm={3}>
             <StatBox>
-              <StyledTypo large>
+              <StyledTypo large={1}>
                 {
                   position === 'GoalKeeper' ? stats.shotsSaved :
                   position === 'Defender' ? stats.tackleSuccess :

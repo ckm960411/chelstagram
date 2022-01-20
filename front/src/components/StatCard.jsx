@@ -14,9 +14,7 @@ const StatCard = ({ name, img, stats }) => {
             <img src={img} alt={name} style={{ height: "100%" }} />
           </div>
           <Typography
-            gutterBottom
             variant={ matches ? "h4" : "h5" }
-            component="div"
             sx={{ marginBottom: 0 }}
           >
             {name === "Appearnces"

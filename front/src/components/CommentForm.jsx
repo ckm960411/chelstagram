@@ -17,8 +17,6 @@ const CommentForm = () => {
     if (comment === '') return
     const data = { playerId: backNumber, userId: 'KMin', text: comment}
     dispatch(addPlayerComment(data))
-      .then(res => console.log(res))
-      .catch(error => console.error(error))
     setComment('')
   }, [comment, dispatch, backNumber])
 

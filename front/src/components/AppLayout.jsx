@@ -27,6 +27,7 @@ import {
   MarkChatUnread as MarkChatUnreadIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -147,11 +148,11 @@ const DrawerPersonalIcons = [
 export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const { myInfo } = useSelector(state => state.user)
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -185,7 +186,7 @@ export default function MiniDrawer({ children }) {
             <IconButton
               color="inherit"
               edge="end"
-              href="/profile"
+              href={myInfo ? '/profile' : '/login'}
               sx={{ marginLeft: 2 }}
             >
               <AccountCircleIcon />

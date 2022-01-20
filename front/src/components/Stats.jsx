@@ -4,8 +4,8 @@ import appearancesImg from "imgs/appearances.png"
 import minutesPlayedImg from "imgs/minutesPlayed.png"
 import gamesStartedImg from "imgs/gamesStarted.png"
 import goalsImg from "imgs/goals.png"
-import DetailStatCard from "./DetailStatCard";
-import StatisticsCard from "./StatisticsCard";
+import DetailStatCard from "components/DetailStatCard";
+import StatisticsCard from "components/StatisticsCard";
 
 const stats = [
   {
@@ -30,8 +30,8 @@ const Stats = ({ player }) => {
   return (
     <>
       <Grid container spacing={2}>
-        {stats.map(stat => (
-          <Grid item xs={12} sm={6} md={3}>
+        {stats.map((stat, i) => (
+          <Grid item xs={12} sm={6} md={3} key={i}>
             <StatCard name={stat.name} img={stat.img} stats={player.stats} />
           </Grid>
         ))}

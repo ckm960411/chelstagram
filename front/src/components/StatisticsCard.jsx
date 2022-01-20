@@ -1,5 +1,6 @@
 import {
   Card,
+  CardActionArea,
   CardContent,
   CardHeader,
   Typography,
@@ -28,9 +29,8 @@ const StyledTypo = styled.div`
 
 const StatNumber = (matches, position, stats, a, b, c, d) => (
   <Typography 
-    gutterBottom
     variant={matches ? "h4" : "h5"}
-    component="div"
+    // component="div"
     sx={{ marginBottom: 0 }}
   >
     {
@@ -42,7 +42,9 @@ const StatNumber = (matches, position, stats, a, b, c, d) => (
   </Typography>
 )
 const StatCard = (position, stats, a, b, c, d) => (
-  <Typography component="div">
+  <Typography 
+    // component="div"
+  >
     {
       position === "GoalKeeper" ? a
       : position === "Defender" ?  b
@@ -58,42 +60,44 @@ const StatisticsCard = ({ player }) => {
 
   return (
     <Card sx={{ borderBottom: "3px solid #001487" }}>
-      <CardHeader
-        subheader={
-          position === "GoalKeeper" ? "Save Statistics"
-          : position === "Defender" ?  "Tackle Statistics"
-          : position === "Forward" && stats.totalShots !== undefined ? "Shooting Statistics"
-          : "Distribution Statistics"
-        }
-      />
-      <CardContent
-        sx={{
-          textAlign: "center",
-          height: "120px",
-          paddingTop: "30px",
-        }}
-      >
-        {StatNumber(matches, position, stats, `${stats.shotsSaved}%`, `${stats.tackleSuccess}%`, `${stats.conversionRate}%`, `${stats.passAccuracy}%`)}
-        {StatCard(position, stats, "Shots Saved", "Tackle Success", "Conversion Rate", "Pass Accuracy")}
-        <StatBar>
-          <PercentageBar percentage={
-            position === "GoalKeeper" ? `${stats.shotsSaved}%`
-            : position === "Defender" ?  `${stats.tackleSuccess}%`
-            : position === "Forward" && stats.totalShots !== undefined ? `${stats.conversionRate}%`
-            : `${stats.passAccuracy}%`
-          } />
-        </StatBar>
-      </CardContent>
-      <CardContent sx={{ textAlign: "center", display: "flex" }}>
-        <StyledTypo borderRight>
-          {StatNumber(matches, position, stats, stats.saves, stats.totalTackles, stats.totalShots, stats.totalPasses)}
-          {StatCard(position, stats, "Saves", "Total Tackles", "Total Shots", "Total Passes")}
-        </StyledTypo>
-        <StyledTypo>
-          {StatNumber(matches, position, stats, stats.savesPerGame, stats.tacklesWon, stats.shotsOnTarget, stats.passesCompleted)}
-          {StatCard(position, stats, "Saves Per Game", "Tackles Won", "Shots On Target", "Passes Completed")}
-        </StyledTypo>
-      </CardContent>
+      <CardActionArea>
+        <CardHeader
+          subheader={
+            position === "GoalKeeper" ? "Save Statistics"
+            : position === "Defender" ?  "Tackle Statistics"
+            : position === "Forward" && stats.totalShots !== undefined ? "Shooting Statistics"
+            : "Distribution Statistics"
+          }
+        />
+        <CardContent
+          sx={{
+            textAlign: "center",
+            height: "120px",
+            paddingTop: "30px",
+          }}
+        >
+          {StatNumber(matches, position, stats, `${stats.shotsSaved}%`, `${stats.tackleSuccess}%`, `${stats.conversionRate}%`, `${stats.passAccuracy}%`)}
+          {StatCard(position, stats, "Shots Saved", "Tackle Success", "Conversion Rate", "Pass Accuracy")}
+          <StatBar>
+            <PercentageBar percentage={
+              position === "GoalKeeper" ? `${stats.shotsSaved}%`
+              : position === "Defender" ?  `${stats.tackleSuccess}%`
+              : position === "Forward" && stats.totalShots !== undefined ? `${stats.conversionRate}%`
+              : `${stats.passAccuracy}%`
+            } />
+          </StatBar>
+        </CardContent>
+        <CardContent sx={{ textAlign: "center", display: "flex" }}>
+          <StyledTypo borderRight>
+            {StatNumber(matches, position, stats, stats.saves, stats.totalTackles, stats.totalShots, stats.totalPasses)}
+            {StatCard(position, stats, "Saves", "Total Tackles", "Total Shots", "Total Passes")}
+          </StyledTypo>
+          <StyledTypo>
+            {StatNumber(matches, position, stats, stats.savesPerGame, stats.tacklesWon, stats.shotsOnTarget, stats.passesCompleted)}
+            {StatCard(position, stats, "Saves Per Game", "Tackles Won", "Shots On Target", "Passes Completed")}
+          </StyledTypo>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };
