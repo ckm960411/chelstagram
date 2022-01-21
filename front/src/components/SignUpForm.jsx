@@ -1,4 +1,4 @@
-import { Button, CircularProgress, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
+import { Alert, CircularProgress, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { signUpRequest } from "store/userSlice";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import styled from "styled-components";
+import { closeError } from "store/userSlice";
 
 const ErrorParagraph = styled.span`
   color: ${red[500]};
@@ -16,13 +17,12 @@ const SignUpForm = () => {
   const { register, watch, formState: { errors }, handleSubmit } = useForm();
   const dispatch = useDispatch()
   const downSm = useMediaQuery(theme => theme.breakpoints.down("sm"))
-  const { loading } = useSelector(state => state.user)
+  const { loading, error } = useSelector(state => state.user)
 
   const passwordRef = useRef();
   passwordRef.current = watch("password");
 
   const onSubmit = (data) => {
-    console.log("data", data);
     dispatch(signUpRequest(data))
   };
 
@@ -144,6 +144,15 @@ const SignUpForm = () => {
       >
         JOIN US
       </LoadingButton>
+      {error && (
+        <Alert 
+          severity="error" 
+          onClose={() => dispatch(closeError())}
+          sx={downSm ? { width: "100%", margin: "20px auto" } : { width: "558px", margin: "20px auto" }}
+        >
+          {error.errorMessage}
+        </Alert>
+      )}
     </form>
   );
 };

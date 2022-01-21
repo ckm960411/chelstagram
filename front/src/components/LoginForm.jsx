@@ -1,18 +1,21 @@
-import { Button, CircularProgress, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
+import { Alert, CircularProgress, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest } from "store/userSlice";
+import { closeError } from "store/userSlice";
 
 const ErrorParagraph = styled.span`
   color: ${red[500]};
 `;
 
 const LoginForm = () => {
-  const { loading } = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  const { loading, error } = useSelector(state => state.user)
   const { register, watch, formState: { errors }, handleSubmit } = useForm();
   const downSm = useMediaQuery(theme => theme.breakpoints.down("sm"))
 
@@ -20,7 +23,7 @@ const LoginForm = () => {
   passwordRef.current = watch("password");
 
   const onSubmit = (data) => {
-    console.log("data", data);
+    dispatch(loginRequest(data))
   };
 
   return (
@@ -76,6 +79,15 @@ const LoginForm = () => {
       >
         LOG IN
       </LoadingButton>
+      {error && (
+        <Alert 
+          severity="error" 
+          onClose={() => dispatch(closeError())}
+          sx={downSm ? { width: "100%", margin: "20px auto" } : { width: "558px", margin: "20px auto" }}
+        >
+          {error.errorMessage}
+        </Alert>
+      )}
     </form>
   );
 };

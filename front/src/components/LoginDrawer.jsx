@@ -28,7 +28,7 @@ const LoginDrawer = () => {
   
   return (
     <span>
-      <Button onClick={toggleDrawer(true)} sx={{ color: '#fff' }}>login</Button>
+      <Button onClick={toggleDrawer(true)} sx={{ color: '#fff', marginLeft: '6px' }}>log in</Button>
       <Drawer
         anchor={'right'}
         open={loginOpen}

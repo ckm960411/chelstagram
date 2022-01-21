@@ -10,8 +10,8 @@ const Comments = () => {
     <>
       <CommentForm />
       <div>
-        {comments.map(comment => (
-          <Comment comment={comment} key={comment.id} />
+        {comments.map((comment, i) => (
+          <Comment comment={comment} key={`${comment.id}-${i}`} />
         ))}
       </div>
     </>

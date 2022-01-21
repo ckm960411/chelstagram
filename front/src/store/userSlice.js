@@ -15,6 +15,13 @@ export const signUpRequest = createAsyncThunk(
     return response.data
   } 
 )
+export const loginRequest = createAsyncThunk(
+  "POST/LOG_IN_REQUEST",
+  async (data) => {
+    const response = await axios.post(`/user/login`, data)
+    return response.data
+  } 
+)
 
 export const userSlice = createSlice({
   name: 'user',
@@ -24,7 +31,9 @@ export const userSlice = createSlice({
     error: null
   },
   reducers: {
-  
+    closeError: state => {
+      state.error = null
+    },
   },
   extraReducers: {
     [loadMyInfo.pending]: (state, action) => {
@@ -49,9 +58,23 @@ export const userSlice = createSlice({
     },
     [signUpRequest.rejected]: (state, action) => {
       state.loading = false
-      state.error = action.error.message
+      state.error =  { errorMessage: "Faield to sign up. Check your email and nickname." }
+    },
+    [loginRequest.pending]: (state, action) => {
+      state.loading = true
+      state.myInfo = null
+    },
+    [loginRequest.fulfilled]: (state, action) => {
+      state.myInfo = action.payload
+      state.loading = false
+    },
+    [loginRequest.rejected]: (state, action) => {
+      state.loading = false
+      state.error = { errorMessage: "Faield to login. Check your email and password."}
     },
   },
 })
+
+export const { closeError } = userSlice.actions
 
 export default userSlice.reducer

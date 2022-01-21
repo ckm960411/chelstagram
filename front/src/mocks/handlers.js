@@ -1,10 +1,57 @@
 import { rest } from "msw";
 import { players } from "dummyData/players";
+import { users } from "dummyData/user"
 
 export const handlers = [
+  rest.post('http://localhost:3000/user/login', async (req, res, ctx) => {
+    const { email, password } = req.body
+
+    const finded = users.find(v => v.email === email)
+    if (!finded) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          errorMessage: "해당 이메일을 찾을 수가 없습니다.",
+        })
+      )
+    }
+    if (finded.password !== password) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          errorMessage: "비밀번호가 일치하지 않습니다.",
+        }),
+      )
+    }
+    return res(
+      ctx.json({
+        email: finded.email,
+        name: finded.name,
+        nickname: finded.nickname,
+      })
+    )
+  }),
   rest.post('http://localhost:3000/user/signup', async (req, res, ctx) => {
     const { name, nickname, email } = req.body
 
+    const findedEmail = users.find(v => v.email === email)
+    if (findedEmail) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          errorMessage: "중복된 계정입니다."
+        })
+      )
+    }
+    const findedNickname = users.find(v => v.nickname === nickname)
+    if (findedNickname) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          errorMessage: "중복된 계정입니다."
+        })
+      )
+    }
     return res(
       ctx.json({
         name,
@@ -15,14 +62,15 @@ export const handlers = [
   }),
   rest.post('http://localhost:3000/players/:playerId/comment', async (req, res, ctx) => {
     const { playerId } = req.params
-    const { userId, text } = req.body
+    const { userId, text, userName } = req.body
     const player = players.filter(player => player.backNumber === Number(playerId))
 
     return res(
-      ctx.status(200).json({
-        id: 123123, 
+      ctx.json({
+        id: '123451hgpik12j23', 
+        userId,
+        name: userName,
         profileImg: null, 
-        userId, 
         text
       })
     )
