@@ -22,13 +22,12 @@ import {
   Home as HomeIcon,
   Person as PersonIcon,
   AccountCircle as AccountCircleIcon,
-  AddCircle as AddCircleIcon,
   Bookmark as BookmarkIcon,
   MarkChatUnread as MarkChatUnreadIcon,
   Search as SearchIcon,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import LoginDrawer from "./LoginDrawer";
+import LoginDrawer from "components/LoginDrawer";
 
 const drawerWidth = 240;
 
@@ -135,11 +134,6 @@ const DrawerPersonalIcons = [
     icon: () => <AccountCircleIcon />,
     primary: "Profile",
     route: "/profile",
-  },
-  {
-    icon: () => <AddCircleIcon />,
-    primary: "Sign Up",
-    route: "/signup",
   },
   {
     icon: () => <BookmarkIcon />,
