@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
-import { styled, useTheme } from '@mui/material/styles';
-import { 
-  Box, 
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { styled, useTheme } from "@mui/material/styles";
+import {
+  Box,
   Drawer as MuiDrawer,
   AppBar as MuiAppBar,
   Toolbar,
@@ -14,8 +14,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@mui/material';
-import { 
+} from "@mui/material";
+import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
@@ -26,76 +26,79 @@ import {
   Bookmark as BookmarkIcon,
   MarkChatUnread as MarkChatUnreadIcon,
   Search as SearchIcon,
-} from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+} from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import LoginDrawer from "./LoginDrawer";
 
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  transition: theme.transitions.create('width', {
+  transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: 'hidden',
+  overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
+  transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: 'hidden',
+  overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + 1px)`,
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  background: '#001487',
-  transition: theme.transitions.create(['width', 'margin'], {
+  background: "#001487",
+  transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
   }),
-);
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+
 
 const StyledBanner = styled(Typography)`
   color: #fff;
@@ -103,8 +106,8 @@ const StyledBanner = styled(Typography)`
   font-size: 20px;
 `;
 const MainTypo = () => (
-  <Typography variant="h5" noWrap component="div">
-    <Link to="/">
+  <Typography variant="h5" noWrap component="div" sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+    <Link to="/" style={{ textDecoration: 'none' }}>
       <StyledBanner>Chelstagram</StyledBanner>
     </Link>
   </Typography>
@@ -114,41 +117,41 @@ const DrawerMainIcons = [
   {
     icon: () => <HomeIcon />,
     primary: "Home",
-    route: '/',
+    route: "/",
   },
   {
     icon: () => <PersonIcon />,
     primary: "Players",
-    route: '/players',
+    route: "/players",
   },
   {
     icon: () => <MarkChatUnreadIcon />,
     primary: "Talk",
-    route: '/talk',
+    route: "/talk",
   },
-]
+];
 const DrawerPersonalIcons = [
   {
     icon: () => <AccountCircleIcon />,
     primary: "Profile",
-    route: '/profile',
+    route: "/profile",
   },
   {
     icon: () => <AddCircleIcon />,
     primary: "Sign Up",
-    route: '/signup',
+    route: "/signup",
   },
   {
     icon: () => <BookmarkIcon />,
     primary: "Bookmark",
-    route: '/bookmark'
+    route: "/bookmark",
   },
-]
+];
 
 export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const { myInfo } = useSelector(state => state.user)
+  const { myInfo } = useSelector((state) => state.user);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -158,39 +161,40 @@ export default function MiniDrawer({ children }) {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
+              marginRight: "36px",
+              ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          { open && <div></div> }
+          {open && <div></div>}
           <MainTypo />
-          <div >
-            <IconButton
-              color="inherit"
-              edge="end"
-            >
+          <div>
+            <IconButton color="inherit" edge="end">
               <SearchIcon />
             </IconButton>
-            <IconButton
-              color="inherit"
-              edge="end"
-              href={myInfo ? '/profile' : '/login'}
-              sx={{ marginLeft: 2 }}
-            >
-              <AccountCircleIcon />
-            </IconButton>
+            {myInfo ? (
+              <IconButton
+                color="inherit"
+                edge="end"
+                href="/profile"
+                sx={{ marginLeft: 2 }}
+              >
+                <AccountCircleIcon />
+              </IconButton>
+            ) : (
+              <LoginDrawer />
+            )}
           </div>
         </Toolbar>
       </AppBar>
@@ -198,28 +202,40 @@ export default function MiniDrawer({ children }) {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           {DrawerMainIcons.map((item) => (
-            <Link to={item.route} key={item.primary} style={{ color: 'inherit', textDecoration: 'none' }}>
-                <ListItem button>
-                  <ListItemIcon children={item.icon()} />
-                  <ListItemText primary={item.primary} />
-                </ListItem>
+            <Link
+              to={item.route}
+              key={item.primary}
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <ListItem button>
+                <ListItemIcon children={item.icon()} />
+                <ListItemText primary={item.primary} />
+              </ListItem>
             </Link>
           ))}
         </List>
         <Divider />
         <List>
           {DrawerPersonalIcons.map((item) => (
-            <Link to={item.route} key={item.primary} style={{ color: 'inherit', textDecoration: 'none' }}>
-                <ListItem button>
-                  <ListItemIcon children={item.icon()} />
-                  <ListItemText primary={item.primary} />
-                </ListItem>
+            <Link
+              to={item.route}
+              key={item.primary}
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <ListItem button>
+                <ListItemIcon children={item.icon()} />
+                <ListItemText primary={item.primary} />
+              </ListItem>
             </Link>
           ))}
         </List>
@@ -227,7 +243,7 @@ export default function MiniDrawer({ children }) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
         <DrawerHeader />
-        <div style={{ maxWidth: '1280px', margin: 'auto' }}>{children}</div>
+        <div style={{ maxWidth: "1280px", margin: "auto" }}>{children}</div>
       </Box>
     </Box>
   );
