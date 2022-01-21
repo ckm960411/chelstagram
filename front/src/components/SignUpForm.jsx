@@ -1,7 +1,11 @@
-import { Button, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
+import { Button, CircularProgress, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpRequest } from "store/userSlice";
+import LoadingButton from '@mui/lab/LoadingButton';
+import SendIcon from '@mui/icons-material/Send';
 import styled from "styled-components";
 
 const ErrorParagraph = styled.span`
@@ -10,13 +14,16 @@ const ErrorParagraph = styled.span`
 
 const SignUpForm = () => {
   const { register, watch, formState: { errors }, handleSubmit } = useForm();
+  const dispatch = useDispatch()
   const downSm = useMediaQuery(theme => theme.breakpoints.down("sm"))
+  const { loading } = useSelector(state => state.user)
 
   const passwordRef = useRef();
   passwordRef.current = watch("password");
 
   const onSubmit = (data) => {
     console.log("data", data);
+    dispatch(signUpRequest(data))
   };
 
   return (
@@ -28,7 +35,7 @@ const SignUpForm = () => {
             variant="standard"
             error={errors.name && true}
             sx={downSm ? { width: '100%'} : { width: "558px" }}
-            {...register("name", { required: true, maxLength: 10 })}
+            {...register("name", { required: true, maxLength: 20 })}
           ></TextField>
           <FormHelperText sx={{ marginLeft: 0 }}>
             {errors.name && errors.name.type === "required" && (
@@ -70,8 +77,11 @@ const SignUpForm = () => {
             {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
           ></TextField>
           <FormHelperText sx={{ marginLeft: 0 }}>
-            {errors.email && (
+            {errors.email && errors.email.type === "required" && (
               <ErrorParagraph>This email field is required.</ErrorParagraph>
+            )}
+            {errors.email && errors.email.type === "pattern" && (
+              <ErrorParagraph>This is an invalid email format.</ErrorParagraph>
             )}
           </FormHelperText>
         </FormControl>
@@ -123,14 +133,17 @@ const SignUpForm = () => {
           </FormHelperText>
         </FormControl>
       </div>
-      <Button
+      <LoadingButton
         type="submit"
-        variant="outlined"
+        variant="contained"
         size="large"
+        loading={loading}
+        loadingIndicator={<span style={{ color: '#fff' }}>Loading... <CircularProgress color="inherit" size={16} sx={{ position: 'relative', top: '4px'}} /></span>}
+        endIcon={<SendIcon />}
         sx={downSm ? { width: "100%", margin: "20px 0" } : { width: "558px", margin: "20px 0" }}
       >
         JOIN US
-      </Button>
+      </LoadingButton>
     </form>
   );
 };

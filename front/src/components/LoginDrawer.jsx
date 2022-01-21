@@ -67,7 +67,7 @@ const LoginDrawer = () => {
               {' '}
               <span 
                 onClick={() => setLoginState(prev => !prev)} 
-                style={{ cursor: "pointer", textDecoration: "underline" }}
+                style={{ cursor: "pointer", textDecoration: "underline", color: '#001487' }}
               >
                 {loginState ? "Join Us" : "Log in"}
               </span>

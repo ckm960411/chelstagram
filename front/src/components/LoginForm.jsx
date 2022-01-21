@@ -1,14 +1,18 @@
-import { Button, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
+import { Button, CircularProgress, FormControl, FormHelperText, TextField, useMediaQuery } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import LoadingButton from '@mui/lab/LoadingButton';
+import SendIcon from '@mui/icons-material/Send';
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const ErrorParagraph = styled.span`
   color: ${red[500]};
 `;
 
 const LoginForm = () => {
+  const { loading } = useSelector(state => state.user)
   const { register, watch, formState: { errors }, handleSubmit } = useForm();
   const downSm = useMediaQuery(theme => theme.breakpoints.down("sm"))
 
@@ -60,15 +64,18 @@ const LoginForm = () => {
           </FormHelperText>
         </FormControl>
       </div>
-      <Button
+      <LoadingButton
         type="submit"
-        variant="outlined"
+        variant="contained"
         size="large"
         fullWidth={downSm}
+        loading={loading}
+        loadingIndicator={<span style={{ color: '#fff' }}>Loading... <CircularProgress color="inherit" size={16} sx={{ position: 'relative', top: '4px'}} /></span>}
+        endIcon={<SendIcon />}
         sx={downSm ? { width: "100%", margin: "20px 0" } : { width: "558px", margin: "20px 0" }}
       >
         LOG IN
-      </Button>
+      </LoadingButton>
     </form>
   );
 };

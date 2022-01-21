@@ -8,6 +8,13 @@ export const loadMyInfo = createAsyncThunk(
     return response.data
   } 
 )
+export const signUpRequest = createAsyncThunk(
+  "POST/SIGN_UP_REQUEST",
+  async (data) => {
+    const response = await axios.post(`/user/signup`, data)
+    return response.data
+  } 
+)
 
 export const userSlice = createSlice({
   name: 'user',
@@ -22,13 +29,25 @@ export const userSlice = createSlice({
   extraReducers: {
     [loadMyInfo.pending]: (state, action) => {
       state.loading = true
-      state.value = []
+      state.myInfo = null
     },
     [loadMyInfo.fulfilled]: (state, action) => {
-      state.value = action.payload
+      state.myInfo = action.payload
       state.loading = false
     },
     [loadMyInfo.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    },
+    [signUpRequest.pending]: (state, action) => {
+      state.loading = true
+      state.myInfo = null
+    },
+    [signUpRequest.fulfilled]: (state, action) => {
+      state.myInfo = action.payload
+      state.loading = false
+    },
+    [signUpRequest.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },

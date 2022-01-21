@@ -181,10 +181,11 @@ export default function MiniDrawer({ children }) {
               <IconButton
                 color="inherit"
                 edge="end"
-                href="/profile"
                 sx={{ marginLeft: 2 }}
               >
-                <AccountCircleIcon />
+                <Link to="/profile" style={{ color: 'inherit' }}>
+                  <AccountCircleIcon sx={{ position: 'relative', top: '4px' }} />
+                </Link>
               </IconButton>
             ) : (
               <LoginDrawer />
