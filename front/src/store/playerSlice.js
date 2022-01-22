@@ -2,17 +2,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const loadPlayerInfo = createAsyncThunk(
-  "player/loadPlayerInfo",
+  "GET/LOAD_PLAYER_INFO_REQUEST",
   async ( playerId ) => {
     const response = await axios.get(`/players/${playerId}`)
     return response.data
   } 
 )
-
 export const addPlayerComment = createAsyncThunk(
-  "player/addPlayerComment",
+  "POST/ADD_PLAYER_COMMENT_REQUEST",
   async ( data ) => {
     const response = await axios.post(`/players/${data.playerId}/comment`, { ...data })
+    return response.data
+  } 
+)
+export const editPlayerComment = createAsyncThunk(
+  "PATCH/EDIT_PLAYER_COMMENT_REQUEST",
+  async ( data ) => {
+    const response = await axios.patch(`/players/${data.playerId}/comment`, data)
     return response.data
   } 
 )
@@ -21,7 +27,7 @@ export const playerSlice = createSlice({
   name: 'player',
   initialState: {
     loading: false,
-    value: {},
+    value: [],
     error: null
   },
   reducers: {
@@ -48,6 +54,18 @@ export const playerSlice = createSlice({
       state.loading = false
     },
     [addPlayerComment.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    },
+    [editPlayerComment.pending]: (state, action) => {
+      state.loading = true
+    },
+    [editPlayerComment.fulfilled]: (state, action) => {
+      const findedIndex = state.value[0].comments.findIndex(v => v.id === action.payload.id)
+      state.value[0].comments.splice(findedIndex, 1, action.payload)
+      state.loading = false
+    },
+    [editPlayerComment.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },

@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import { styled, alpha } from '@mui/material/styles'
-import { Avatar, Divider, Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material"
-import { 
-  MoreVert as MoreVertIcon ,
-  Edit as EditIcon,
-  ReportProblem as ReportProblemIcon,
-  Delete as DeleteIcon,
-} from '@mui/icons-material';
-import { useSelector } from "react-redux";
+import { Alert, Avatar, Button, Divider, Grid, IconButton, Menu, MenuItem, TextField, Typography } from "@mui/material"
+import { MoreVert as MoreVertIcon, Edit as EditIcon, ReportProblem as ReportProblemIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { useSelector, useDispatch } from "react-redux";
+import { editPlayerComment } from "store/playerSlice";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -51,11 +47,17 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, playerId }) => {
+  const { myInfo } = useSelector(state => state.user)
+  const { userName, text, date, userId, id } = comment
+
+  const editCommentRef = useRef()
+  const dispatch = useDispatch()
+
   const [timeAgo, setTimeAgo] = useState(0)
   const [anchorEl, setAnchorEl] = useState(null);
-  const { myInfo } = useSelector(state => state.user)
-  const { userName, text, date, userId } = comment
+  const [editing, setEditing] = useState(false)
+  const [commentError, setCommentError] = useState('')
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -64,6 +66,27 @@ const Comment = ({ comment }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onEditComment = useCallback(() => {
+    handleClose()
+    setEditing(true)
+  }, [])
+  const onSubmitComment = useCallback(() => {
+    if (editCommentRef.current.value.trim() === '') {
+      return setCommentError("There can't be empty content in the comments.")
+    }
+    if (!myInfo) {
+      alert('로그인한 뒤에 댓글을 달 수 있습니다.')
+      return
+    }
+    const data = { 
+      id,
+      playerId,
+      text: editCommentRef.current.value.trim(),
+    }
+    dispatch(editPlayerComment(data))
+    setEditing(false)
+  }, [dispatch, playerId, myInfo, id])
 
   useEffect(() => {
     setTimeAgo(formatDistanceToNowStrict(date))
@@ -77,44 +100,84 @@ const Comment = ({ comment }) => {
         </Grid>
         <Grid item justifyContent="left" xs zeroMinWidth>
           <h4 style={{ margin: '10px 0' }}>{userName}</h4>
-          <p>{text}</p>
-          <Typography variant="body2">{format(date, "yyyy.MM.dd kk:mm")} ({timeAgo} ago)</Typography>
+          { editing ? (
+            <>
+              <TextField
+                defaultValue={text}
+                multiline
+                rows={2}
+                fullWidth
+                variant="outlined"
+                inputRef={editCommentRef}
+              />
+              <Button
+                variant="contained" 
+                sx={{ float: 'right', marginTop: 1 }}
+                onClick={onSubmitComment}
+              >
+                Edit Comment
+              </Button>
+              <Button
+                variant="outlined" 
+                sx={{ float: 'right', marginTop: 1, marginRight: 1 }}
+                onClick={() => setEditing(false)}
+              >
+                Cancel
+              </Button>
+              { commentError && (
+                <Alert
+                  severity="warning" 
+                  onClose={() => setCommentError('')}
+                  sx={{ marginTop: 7  }}
+                >
+                  "There can't be empty content in the comments."
+                </Alert>
+              )}
+            </>
+          ) : (
+            <>
+              <p>{text}</p>
+              <Typography variant="body2">{format(date, "yyyy.MM.dd kk:mm")} ({timeAgo} ago)</Typography>
+            </>
+          )}
         </Grid>
-        <Grid item>
-          <IconButton aria-label="more button" onClick={handleClick}>
-            <MoreVertIcon />
-          </IconButton>
-          <StyledMenu
-            id="demo-customized-menu"
-            MenuListProps={{
-              'aria-labelledby': 'demo-customized-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            { myInfo && myInfo.id === userId ? (
-              <div>
-                <MenuItem onClick={handleClose} disableRipple>
-                  <EditIcon />
-                  Edit
-                </MenuItem>
-                <MenuItem onClick={handleClose} disableRipple>
-                  <DeleteIcon />
-                  Delete
-                </MenuItem>
-              </div>
-            ) : (
-              <div>
-                <MenuItem onClick={handleClose} disableRipple>
-                  <ReportProblemIcon />
-                  Report Problem
-                </MenuItem>
-              </div>
-            )}
-          </StyledMenu>
+        { editing || (
+          <Grid item>
+            <IconButton aria-label="more button" onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                'aria-labelledby': 'demo-customized-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              { myInfo && myInfo.id === userId ? (
+                <div>
+                  <MenuItem onClick={onEditComment} disableRipple>
+                    <EditIcon />
+                    Edit
+                  </MenuItem>
+                  <MenuItem onClick={handleClose} disableRipple>
+                    <DeleteIcon />
+                    Delete
+                  </MenuItem>
+                </div>
+              ) : (
+                <div>
+                  <MenuItem onClick={handleClose} disableRipple>
+                    <ReportProblemIcon />
+                    Report Problem
+                  </MenuItem>
+                </div>
+              )}
+            </StyledMenu>
+          </Grid>
+        )}
         </Grid>
-      </Grid>
       <Divider sx={{ margin: '10px 0' }} />
     </>
   )

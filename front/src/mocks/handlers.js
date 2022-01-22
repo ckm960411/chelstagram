@@ -67,7 +67,7 @@ export const handlers = [
   rest.post('http://localhost:3000/players/:playerId/comment', async (req, res, ctx) => {
     const { playerId } = req.params
     const { userId, userName, commentId, text, date } = req.body
-    const player = players.filter(player => player.backNumber === Number(playerId))
+    const player = players.find(player => player.backNumber === Number(playerId))
 
     return res(
       ctx.json({
@@ -77,6 +77,21 @@ export const handlers = [
         profileImg: null, 
         text: text,
         date: date,
+      })
+    )
+  }),
+  // 댓글 수정
+  rest.patch('http://localhost:3000/players/:playerId/comment', async (req, res, ctx) => {
+    const { playerId } = req.params
+    const { text, id } = req.body
+    const player = players.find(player => player.backNumber === Number(playerId))
+    const { comments } = player
+    const finded = comments.find(comment => comment.id === id)
+
+    return res(
+      ctx.json({
+        ...finded,
+        text,
       })
     )
   }),

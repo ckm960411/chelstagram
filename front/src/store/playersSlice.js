@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const loadPlayersList = createAsyncThunk(
-  "players/loadPlayersList",
+  "GET/LOAD_PLAYERS_LIST_REQUEST",
   async () => {
     const response = await axios.get('/players')
     return response.data
