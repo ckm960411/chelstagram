@@ -2,6 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from 'uuid';
 import { addPlayerComment } from "store/playerSlice";
 
 const CommentForm = () => {
@@ -21,7 +22,14 @@ const CommentForm = () => {
       setComment('')
       return
     }
-    const data = { playerId: backNumber, userId: myInfo.id, userName: myInfo.nickname, text: comment}
+    const data = { 
+      playerId: backNumber, 
+      userId: myInfo.id, 
+      userName: myInfo.nickname, 
+      commentId: uuidv4(), 
+      text: comment,
+      date: Date.now()
+    }
     dispatch(addPlayerComment(data))
     setComment('')
   }, [comment, dispatch, backNumber, myInfo])

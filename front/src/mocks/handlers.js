@@ -3,6 +3,7 @@ import { players } from "dummyData/players";
 import { users } from "dummyData/user"
 
 export const handlers = [
+  // 로그인
   rest.post('http://localhost:3000/user/login', async (req, res, ctx) => {
     const { email, password } = req.body
 
@@ -25,12 +26,14 @@ export const handlers = [
     }
     return res(
       ctx.json({
+        id: finded.id,
         email: finded.email,
         name: finded.name,
         nickname: finded.nickname,
       })
     )
   }),
+  // 회원가입
   rest.post('http://localhost:3000/user/signup', async (req, res, ctx) => {
     const { name, nickname, email } = req.body
 
@@ -60,21 +63,24 @@ export const handlers = [
       })
     )
   }),
+  // 댓글 달기
   rest.post('http://localhost:3000/players/:playerId/comment', async (req, res, ctx) => {
     const { playerId } = req.params
-    const { userId, text, userName } = req.body
+    const { userId, userName, commentId, text, date } = req.body
     const player = players.filter(player => player.backNumber === Number(playerId))
 
     return res(
       ctx.json({
-        id: '123451hgpik12j23', 
-        userId,
-        name: userName,
+        id: commentId,
+        userId: userId,
+        userName: userName,
         profileImg: null, 
-        text
+        text: text,
+        date: date,
       })
     )
   }),
+  // 선수정보 불러오기
   rest.get('http://localhost:3000/players/:playerId', async (req, res, ctx) => {
     const { playerId } = req.params
     const player = players.filter(player => player.backNumber === Number(playerId))
@@ -85,6 +91,7 @@ export const handlers = [
       })
     )
   }),
+  // 선수단 전체 정보 불러오기
   rest.get('http://localhost:3000/players', async (req, res, ctx) => {
     return res(
       ctx.json({

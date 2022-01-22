@@ -397,7 +397,16 @@ export const players = [
       totalPasses: 573,
       passesCompleted: 482,
     },
-    comments: [],
+    comments: [
+      {
+        id: '0a689b17-add8-4ad9-8108-18b12f68f009',
+        userId: 'cead7ff6-bcbf-4f1a-87ad-42756c40932d',
+        userName: '조진호',
+        profileImg: null, 
+        text: "넌 진짜 나한테 많이 배워야한다ㅋㅋ",
+        date: 1642814456680,
+      }
+    ],
   },
   {
     backNumber: 20,
