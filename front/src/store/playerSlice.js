@@ -18,7 +18,14 @@ export const addPlayerComment = createAsyncThunk(
 export const editPlayerComment = createAsyncThunk(
   "PATCH/EDIT_PLAYER_COMMENT_REQUEST",
   async ( data ) => {
-    const response = await axios.patch(`/players/${data.playerId}/comment`, data)
+    const response = await axios.patch(`/players/${data.playerId}/comment/`, data)
+    return response.data
+  } 
+)
+export const deletePlayerComment = createAsyncThunk(
+  "DELETE/EDIT_PLAYER_COMMENT_REQUEST",
+  async ( data ) => {
+    const response = await axios.delete(`/players/${data.playerId}/comment/${data.id}`)
     return response.data
   } 
 )
@@ -61,11 +68,23 @@ export const playerSlice = createSlice({
       state.loading = true
     },
     [editPlayerComment.fulfilled]: (state, action) => {
-      const findedIndex = state.value[0].comments.findIndex(v => v.id === action.payload.id)
-      state.value[0].comments.splice(findedIndex, 1, action.payload)
+      const finded = state.value[0].comments.find(v => v.id === action.payload.id)
+      finded.text = action.payload.text
       state.loading = false
     },
     [editPlayerComment.rejected]: (state, action) => {
+      state.loading = false
+      state.error = action.error.message
+    },
+    [deletePlayerComment.pending]: (state, action) => {
+      state.loading = true
+    },
+    [deletePlayerComment.fulfilled]: (state, action) => {
+      const findedIndex = state.value[0].comments.findIndex(v => v.id === action.payload.id)
+      state.value[0].comments.splice(findedIndex, 1)
+      state.loading = false
+    },
+    [deletePlayerComment.rejected]: (state, action) => {
       state.loading = false
       state.error = action.error.message
     },

@@ -84,14 +84,51 @@ export const handlers = [
   rest.patch('http://localhost:3000/players/:playerId/comment', async (req, res, ctx) => {
     const { playerId } = req.params
     const { text, id } = req.body
-    const player = players.find(player => player.backNumber === Number(playerId))
-    const { comments } = player
-    const finded = comments.find(comment => comment.id === id)
+    // const player = players.find(player => player.backNumber === Number(playerId))
+    // const { comments } = player
+    // const finded = comments.find(comment => comment.id === id)
+
+    // if (!finded) {
+    //   return res(
+    //     ctx.status(403),
+    //     ctx.json({
+    //       errorMessage: "없는 댓글을 수정하시려 하는군요."
+    //     })
+    //   )
+    // }
 
     return res(
       ctx.json({
-        ...finded,
+        id,
         text,
+      })
+    )
+  }),
+  // 댓글 삭제
+  rest.delete('http://localhost:3000/players/:playerId/comment/:id', async (req, res, ctx) => {
+    const { playerId, id } = req.params
+    // const player = players.find(player => player.backNumber === Number(playerId))
+    // console.log(player)
+    // const { comments } = player
+    // const finded = comments.find(comment => {
+    //   console.log(`comment.id: ${comment.id}`)
+    //   console.log(id)
+    //   return comment.id === id 
+    // })
+    // console.log(finded)
+
+    // if (!finded) {
+    //   return res(
+    //     ctx.status(403),
+    //     ctx.json({
+    //       errorMessage: "없는 댓글을 삭제하시려 하는군요."
+    //     })
+    //   )
+    // }
+
+    return res(
+      ctx.json({
+        id
       })
     )
   }),

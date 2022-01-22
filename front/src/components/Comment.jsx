@@ -4,7 +4,7 @@ import { styled, alpha } from '@mui/material/styles'
 import { Alert, Avatar, Button, Divider, Grid, IconButton, Menu, MenuItem, TextField, Typography } from "@mui/material"
 import { MoreVert as MoreVertIcon, Edit as EditIcon, ReportProblem as ReportProblemIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useSelector, useDispatch } from "react-redux";
-import { editPlayerComment } from "store/playerSlice";
+import { deletePlayerComment, editPlayerComment } from "store/playerSlice";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -67,6 +67,10 @@ const Comment = ({ comment, playerId }) => {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    setTimeAgo(formatDistanceToNowStrict(date))
+  }, [date])
+
   const onEditComment = useCallback(() => {
     handleClose()
     setEditing(true)
@@ -76,7 +80,7 @@ const Comment = ({ comment, playerId }) => {
       return setCommentError("There can't be empty content in the comments.")
     }
     if (!myInfo) {
-      alert('로그인한 뒤에 댓글을 달 수 있습니다.')
+      alert('You can modify the comments after logging in.')
       return
     }
     const data = { 
@@ -87,10 +91,17 @@ const Comment = ({ comment, playerId }) => {
     dispatch(editPlayerComment(data))
     setEditing(false)
   }, [dispatch, playerId, myInfo, id])
-
-  useEffect(() => {
-    setTimeAgo(formatDistanceToNowStrict(date))
-  }, [date])
+  const onDeleteComment = useCallback(() => {
+    if (!myInfo) {
+      alert('You can only delete your own comments.')
+      return
+    }
+    const ok = window.confirm('Do you really want to delete the comments?')
+    if (!ok) return handleClose()
+    const data = { id, playerId }
+    dispatch(deletePlayerComment(data))
+    handleClose()
+  }, [dispatch, id, playerId, myInfo])
 
   return (
     <>
@@ -161,7 +172,7 @@ const Comment = ({ comment, playerId }) => {
                     <EditIcon />
                     Edit
                   </MenuItem>
-                  <MenuItem onClick={handleClose} disableRipple>
+                  <MenuItem onClick={onDeleteComment} disableRipple>
                     <DeleteIcon />
                     Delete
                   </MenuItem>
